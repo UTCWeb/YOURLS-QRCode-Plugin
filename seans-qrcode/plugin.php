@@ -95,7 +95,7 @@ function sean_yourls_qrcode( $request ) {
 yourls_add_filter( 'action_links', 'sean_add_qrcode_button' );
 function sean_add_qrcode_button( $action_links, $keyword, $url, $ip, $clicks, $timestamp ) {
 	$surl = yourls_link( $keyword );
-	$id = yourls_string2htmlid( $keyword ); // used as HTML #id
+	$id = yourls_unique_element_id( $keyword ); // used as HTML #id
 
 	// We're adding .qr to the end of the URL, right?
 	$qr = '.qr';
@@ -131,8 +131,12 @@ function sean_add_qrcode_css_head( $context ) {
 			<style type="text/css">
 				td.actions .button_qrcode {
 					margin-right: 0;
-					background: url(data:image/png;base64,R0lGODlhEAAQAIAAAAAAAP///yH5BAAAAAAALAAAAAAQABAAAAIvjI9pwIztAjjTzYWr1FrS923NAymYSV3borJW26KdaHnr6UUxd4fqL0qNbD2UqQAAOw==) no-repeat 2px 50%;
-          visibility: visible !important;
+					background: #112e51 url(data:image/png;base64,R0lGODlhEAAQAIAAAAAAAP///yH5BAAAAAAALAAAAAAQABAAAAIvjI9pwIztAjjTzYWr1FrS923NAymYSV3borJW26KdaHnr6UUxd4fqL0qNbD2UqQAAOw==) 2px center no-repeat;
+                    background-size: 23px;
+                    background-position: center;
+                    border: none;
+                    padding: 3px;
+                    border-radius: 2px;
 				}
 			</style>
 
@@ -152,7 +156,7 @@ function sean_add_qrcode_css_head( $context ) {
 			function sean_add_qr_popup(el) {
 				// need to do 'off' first because adding a URL triggers this twice and we don't want two identical actions added to click
 				el.off('click').on('click', function() {
-					var NWin = window.open($(this).attr('href'), '', 'scrollbars=0,location=0,height=200,width=200');
+					var NWin = window.open($(this).attr('href'), '', 'scrollbars=0,location=0,height=380,width=380');
 					if (window.focus) {
 						NWin.focus();
 					}
